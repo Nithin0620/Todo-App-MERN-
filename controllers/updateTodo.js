@@ -7,7 +7,8 @@ exports.updateTodo = async(req,res)=>{
       const{title,description}= req.body;
 
       const result = await Todo.findByIdAndUpdate({_id:id},
-                                                {title,description,updatedAt:Date.now()}
+                                                {title,description,updatedAt:Date.now()},
+                                                {new:true}
       )
       
       res.status(200).json({
