@@ -71,7 +71,9 @@ export async function gettodofunction(){
       catch(e){
          console.log("Error occured in intracting with the db",e)
       }
-      toast.dismiss(toastID);
+      finally{
+         toast.dismiss(toastID);
+      }
 }
 
 export async function updatetodofunction(id , title,description){
@@ -90,11 +92,15 @@ export async function updatetodofunction(id , title,description){
 
          toast.success("Task Updated Successfully");
 
+         return response;
+
       }
       catch(e){
          console.log(e.message,"Error occured in intracting with the db")
       }
-      toast.dismiss(toastID);
+     finally{
+         toast.dismiss(toastID);
+      }
 }
 
 export async function gettodobyidfunction(id){
@@ -116,7 +122,9 @@ export async function gettodobyidfunction(id){
       catch(e){
          console.log(e.message,"Error occured in intracting with the db")
       }
-      toast.dismiss(toastID);
+      finally{
+         toast.dismiss(toastID);
+      }
 
 }
 
@@ -126,7 +134,7 @@ export async function markasdonefunction(id,done){
          if(!id){
             throw new Error("ID of the Task is required to mark the task done");
          }
-         const response = await apiConnector("PUT", `${markasdone}/${id}` , {done});
+         const response = await apiConnector("PUT", `${markasdone}/${id}` ,{done});
          if(!response?.data?.success){
             throw new Error("Error occured in intracting with the db");
          }
@@ -137,5 +145,7 @@ export async function markasdonefunction(id,done){
       catch(e){
          console.log(e.message,"Error occured in intracting with the db")
       }
-      toast.dismiss(toastID);
+      finally{
+         toast.dismiss(toastID);
+      }
 }
