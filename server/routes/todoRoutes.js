@@ -8,12 +8,12 @@ const {getTodoById,getTodo} = require("../controllers/getTodo");
 const {markAsDone} = require("../controllers/markAsDone");
 
 
-router.post("/createtodo",createTodo);
+ router.post("/createtodo",createTodo);          
 router.put("/updatetodo/:id",updateTodo);
-router.delete("/deletetodo/:id",deleteTodo);
+ router.delete("/deletetodo/:id",deleteTodo); 
 router.get("/gettodobyid/:id",getTodoById);
-router.get("/gettodo",getTodo);
-router.put("/markasdone/:id",markAsDone);
+ router.get("/gettodo",getTodo);
+ router.put("/markasdone/:id",markAsDone);
 
 
 module.exports = router;

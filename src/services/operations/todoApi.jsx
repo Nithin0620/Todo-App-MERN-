@@ -1,8 +1,8 @@
-import {toast} from react-hot-toast;
+import {toast} from "react-hot-toast";
 import { apiConnector } from "../ApiConnector";
 import {todoapis} from "../Apis";
 
-const {createtodo , deletetodo} = todoapis;
+const {createtodo , deletetodo ,gettodo ,updatetodo ,markasdone , gettodobyid} = todoapis;
 
 export function createtodofunction (newTask , description){
    return async()=>{
@@ -38,9 +38,9 @@ export function deletetodofunction (id){
       const toastID = toast.loading("Loading...");
       try{
          if(!id){
-            throw new error("Id is required to delete the task");
+            throw new Error("Id is required to delete the task");
          }
-         const response = apiConnector("DELETE" , deletetodo);
+         const response = await apiConnector("DELETE" , `${deletetodo}/${id}`);
 
          if(!response?.data?.success){
             throw new Error("Error occured in intracting with the db");
@@ -58,4 +58,93 @@ export function deletetodofunction (id){
 }
 
 
+export function gettodofunction(){
+   return async()=>{
+      const toastID = toast.loading("Loading...");
+      try{
+         const response = await apiConnector("GET",gettodo);
 
+         if(!response?.data?.success){
+            throw new Error("Error occured in intracting with the db in get todo call");
+         }
+
+         return response.data;
+         
+      }
+      catch(e){
+         console.log(e.message,"Error occured in intracting with the db")
+      }
+      toast.dismiss(toastID);
+   }
+}
+
+export function updatetodofunction(id , title,description){
+   return async()=>{
+      const toastID = toast.loading("LOADING...");
+      try{
+         if(!id){
+            throw new Error("ID of the Task is required to update the task");
+         }
+         if(!title || !description){
+            throw new Error("updated title and description of the Task is required to update the task");
+         }
+         const response = await apiConnector("PUT" , `${updatetodo}/${id}`,{title,description});
+         if(!response?.data?.success){
+            throw new Error("Error occured in intracting with the db");
+         }
+
+         toast.success("Task Updated Successfully");
+
+      }
+      catch(e){
+         console.log(e.message,"Error occured in intracting with the db")
+      }
+      toast.dismiss(toastID);
+   }
+}
+
+export function gettodobyidfunction(id){
+   return async()=>{
+      const toastID = toast.loading("Loading...");
+      try{
+         if(!id){
+            throw new Error("ID of the Task is required to retirive the task");
+         }
+         const response = await apiConnector("GET", `${gettodobyid}/${id}`);
+         if(!response?.data?.success){
+            throw new Error("Error occured in intracting with the db");
+         }
+
+         toast.success("Task retrived  Successfully");
+         return response.data;
+
+
+      }
+      catch(e){
+         console.log(e.message,"Error occured in intracting with the db")
+      }
+      toast.dismiss(toastID);
+   }
+}
+
+export function markasdonefunction(id){
+   return async()=>{
+      const toastID = toast.loading("Loading...");
+      try{
+         if(!id){
+            throw new Error("ID of the Task is required to mark the task done");
+         }
+         const response = await apiConnector("PUT", `${markasdone}/${id}`);
+         if(!response?.data?.success){
+            throw new Error("Error occured in intracting with the db");
+         }
+
+         toast.success("Task marked as Done Successfully");
+
+      }
+      catch(e){
+         console.log(e.message,"Error occured in intracting with the db")
+      }
+      toast.dismiss(toastID);
+   }
+}

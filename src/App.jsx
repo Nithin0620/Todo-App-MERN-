@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FaRegSquarePlus } from "react-icons/fa6";
-import RenderTask from './components/renderTask';
-import {useDispatch} from "react-redux";
-import {createtodofunction} from "./services/operations"
+import {useDispatch} from "@reduxjs/toolkit";
+import {toast} from "react-hot-toast";
+import {createtodofunction , gettodofunction} from "./services/operations/todoApi"
+import RenderTask from "./components/renderTask"
 
 const App = () => {
 
@@ -12,6 +13,15 @@ const App = () => {
   const [description,setDescription] = useState("");
   const [allTask , setAllTask] =useState([]);
   const length = allTask.length();
+
+
+  useEffect(()=>{
+    const response = dispatch(gettodofunction());
+    if(!response){
+      toast.error("Todo didn't retrived correctly");
+    }
+    setAllTask(response);
+  },[])
 
   const handleTaskAdding=(e)=>{
     e.preventDefault();
@@ -35,7 +45,7 @@ const App = () => {
          className='border-b-2 text-black'
          />
 
-        <button onClick={handleTaskAdding()}>
+        <button onClick={handleTaskAdding}>
           <FaRegSquarePlus />
         </button>
       </div>

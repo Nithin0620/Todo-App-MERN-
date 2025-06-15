@@ -6,6 +6,7 @@ require("dotenv").config();
 const PORT = process.env.PORT || 4000;
 
 app.use(express.json());
+
 const todoRoutes = require("./routes/todoRoutes")
 app.use("/api/v1",todoRoutes);
 
@@ -22,8 +23,6 @@ dbconnect();
 app.listen (PORT , ()=>{
    console.log(`server Started Successfully at port number ${PORT}`);
 })
-
-
 
 app.get("/",(req,res)=>{
    res.send(`<h1> This is the homepage of the server <h1/>`);
