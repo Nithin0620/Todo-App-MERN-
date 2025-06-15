@@ -1,25 +1,25 @@
 import {IoMdClose } from "react-icons/io";
 import {deletetodofunction , markasdonefunction} from "../services/operations/todoApi"
 import {toast} from "react-hot-toast"
-import {useDispatch} from "@reduxjs/toolkit";
+// import {useDispatch} from "react-redux";
 
 
 const RenderTask = ({task}) => {
-   const dispatch = useDispatch();
+   // const dispatch = useDispatch();
    const id  = task._id;
 
-   const handleCheckBox=()=>{
+   const  handleCheckBox=  ()=>{
       if(!id){
          toast.error("Error in retriving the id of the task");
       }
-      dispatch(markasdonefunction(id));
+      markasdonefunction(id);
    }
 
    const handledelete=()=>{
       if(!id){
          toast.error("Error in retriving the id of the task");
       }
-      dispatch(deletetodofunction(id));
+      deletetodofunction(id);
    }
 
   return (
@@ -28,8 +28,8 @@ const RenderTask = ({task}) => {
 
       <div>
          <p>{task.markasdone?
-            (<div className='line-through'>${task.title}</div>) :
-            (<div> ${task.title}</div>)}
+            (<div className='line-through'>`${task.title}`</div>) :
+            (<div> `${task.title}`</div>)}
          </p>
       </div>
 

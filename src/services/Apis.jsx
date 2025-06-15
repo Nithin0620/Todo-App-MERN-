@@ -1,4 +1,4 @@
-const BASE_URL ="http://localhost:4000/api/v1" || process.env.BASE_URL
+const BASE_URL =process.env.BASE_URL || "http://localhost:5000/api/v1"
 
 export const todoapis = {
    createtodo :`${BASE_URL}/createtodo`,

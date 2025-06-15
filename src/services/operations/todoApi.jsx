@@ -4,8 +4,8 @@ import {todoapis} from "../Apis";
 
 const {createtodo , deletetodo ,gettodo ,updatetodo ,markasdone , gettodobyid} = todoapis;
 
-export function createtodofunction (newTask , description){
-   return async()=>{
+export async function  createtodofunction (newTask , description){
+   
       const toastID = toast.loading("Loading...");
       try{
          if(!newTask || !description){
@@ -30,11 +30,10 @@ export function createtodofunction (newTask , description){
       finally{
          toast.dismiss(toastID);
       }
-   }
+   
 }
 
-export function deletetodofunction (id){
-   return async()=>{
+export async function deletetodofunction (id){
       const toastID = toast.loading("Loading...");
       try{
          if(!id){
@@ -54,12 +53,10 @@ export function deletetodofunction (id){
       finally{
          toast.dismiss(toastID);
       }
-   }
 }
 
 
-export function gettodofunction(){
-   return async()=>{
+export async function gettodofunction(){
       const toastID = toast.loading("Loading...");
       try{
          const response = await apiConnector("GET",gettodo);
@@ -67,19 +64,17 @@ export function gettodofunction(){
          if(!response?.data?.success){
             throw new Error("Error occured in intracting with the db in get todo call");
          }
-
-         return response.data;
+         console.log(response);
+         return response.data.data;
          
       }
       catch(e){
-         console.log(e.message,"Error occured in intracting with the db")
+         console.log("Error occured in intracting with the db",e)
       }
       toast.dismiss(toastID);
-   }
 }
 
-export function updatetodofunction(id , title,description){
-   return async()=>{
+export async function updatetodofunction(id , title,description){
       const toastID = toast.loading("LOADING...");
       try{
          if(!id){
@@ -100,11 +95,9 @@ export function updatetodofunction(id , title,description){
          console.log(e.message,"Error occured in intracting with the db")
       }
       toast.dismiss(toastID);
-   }
 }
 
-export function gettodobyidfunction(id){
-   return async()=>{
+export async function gettodobyidfunction(id){
       const toastID = toast.loading("Loading...");
       try{
          if(!id){
@@ -124,11 +117,10 @@ export function gettodobyidfunction(id){
          console.log(e.message,"Error occured in intracting with the db")
       }
       toast.dismiss(toastID);
-   }
+
 }
 
-export function markasdonefunction(id){
-   return async()=>{
+export async function markasdonefunction(id){
       const toastID = toast.loading("Loading...");
       try{
          if(!id){
@@ -146,5 +138,4 @@ export function markasdonefunction(id){
          console.log(e.message,"Error occured in intracting with the db")
       }
       toast.dismiss(toastID);
-   }
 }
