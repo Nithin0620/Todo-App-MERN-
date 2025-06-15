@@ -4,16 +4,16 @@ import {todoapis} from "../Apis";
 
 const {createtodo , deletetodo ,gettodo ,updatetodo ,markasdone , gettodobyid} = todoapis;
 
-export async function  createtodofunction (newTask , description){
+export async function  createtodofunction (title , description){
    
       const toastID = toast.loading("Loading...");
       try{
-         if(!newTask || !description){
+         if(!title || !description){
             throw new Error("All fields are required");
          }
 
          const response = await apiConnector("POST" , createtodo ,{
-            newTask,
+            title,
             description
          })
 
@@ -24,7 +24,7 @@ export async function  createtodofunction (newTask , description){
          toast.success("Todo created Successfully");
       }
       catch(e){
-         console.log(e.message,"Error occured while intracting with the DB");
+         console.log(e,"Error occured while intracting with the DB");
 
       }
       finally{
@@ -120,13 +120,13 @@ export async function gettodobyidfunction(id){
 
 }
 
-export async function markasdonefunction(id){
+export async function markasdonefunction(id,done){
       const toastID = toast.loading("Loading...");
       try{
          if(!id){
             throw new Error("ID of the Task is required to mark the task done");
          }
-         const response = await apiConnector("PUT", `${markasdone}/${id}`);
+         const response = await apiConnector("PUT", `${markasdone}/${id}` , {done});
          if(!response?.data?.success){
             throw new Error("Error occured in intracting with the db");
          }
